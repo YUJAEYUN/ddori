@@ -52,6 +52,7 @@
         0 0 0 1px rgba(200, 169, 110, 0.08),
         0 30px 80px rgba(0, 0, 0, 0.9),
         0 0 80px rgba(200, 169, 110, 0.04);
+      transform: none;
     }
 
     .header-bar {
@@ -70,6 +71,20 @@
       color: #555;
       letter-spacing: 2px;
       text-transform: uppercase;
+      flex: 1;
+    }
+
+    .urgent-badge {
+      font-size: 9px;
+      font-family: sans-serif;
+      font-weight: 700;
+      color: #ff4444;
+      border: 1px solid #ff4444;
+      padding: 2px 6px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-radius: 2px;
+      opacity: 0.85;
     }
 
     .profile-section {
@@ -99,6 +114,24 @@
       right: 0;
       height: 70px;
       background: linear-gradient(transparent, #1a1a1a);
+    }
+
+    /* 읽음 스탬프 */
+    .stamp {
+      position: absolute;
+      top: 18px;
+      right: -28px;
+      background: rgba(255, 68, 68, 0.15);
+      border: 2px solid rgba(255, 68, 68, 0.6);
+      color: rgba(255, 68, 68, 0.85);
+      font-family: sans-serif;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      padding: 4px 36px;
+      transform: rotate(30deg);
+      white-space: nowrap;
+      border-radius: 2px;
     }
 
     .info-section {
@@ -196,7 +229,6 @@
       background: linear-gradient(90deg, transparent, #c8a96e 40%, #c8a96e 60%, transparent);
     }
 
-    /* 배경 물음표 장식 */
     .punchline-section::after {
       content: '?';
       position: absolute;
@@ -233,8 +265,14 @@
       z-index: 1;
     }
 
+    @keyframes glow-pulse {
+      0%, 100% { color: #c8a96e; text-shadow: 0 0 10px rgba(200,169,110,0.3); }
+      50%       { color: #f0d090; text-shadow: 0 0 30px rgba(200,169,110,0.8); }
+    }
+
     .punchline .highlight {
       color: #c8a96e;
+      animation: glow-pulse 2s ease-in-out infinite;
     }
 
     .punchline-sub {
@@ -292,6 +330,7 @@
         min-height: 100dvh;
         display: flex;
         flex-direction: column;
+        transform: none;
       }
 
       .header-bar {
@@ -319,6 +358,13 @@
       .photo-overlay {
         height: 100px;
         background: linear-gradient(transparent, #1a1a1a);
+      }
+
+      .stamp {
+        top: 22px;
+        right: -24px;
+        font-size: 12px;
+        padding: 4px 32px;
       }
 
       .info-section {
@@ -395,6 +441,7 @@
       <rect x="9" y="9" width="6" height="6" fill="#333" />
     </svg>
     <span>Official Profile &nbsp;/&nbsp; Verified Executive</span>
+    <div class="urgent-badge">URGENT</div>
   </div>
 
   <div class="profile-section">
@@ -405,7 +452,7 @@
 
     <div class="info-section">
       <div>
-        <div class="name">Frank</div>
+        <div class="name">만우절</div>
         <div class="title">Chief Biscuit Officer</div>
         <div class="divider"></div>
 
@@ -439,7 +486,7 @@
           <line x1="3" y1="5" x2="7" y2="5" stroke="#444" stroke-width="1"/>
           <line x1="5" y1="3" x2="5" y2="7" stroke="#444" stroke-width="1"/>
         </svg>
-        <span>Availability: Always &nbsp;&bull;&nbsp; Response Rate: 100% (if treats are involved)</span>
+        <span>마지막 접속: 방금 전 &nbsp;&bull;&nbsp; 당신 생각 중</span>
       </div>
     </div>
   </div>
