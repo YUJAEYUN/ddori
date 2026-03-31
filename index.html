@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frank - Chief Biscuit Officer</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0d0d0d;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ctext x='18' y='52' font-size='30' fill='rgba(200,169,110,0.06)' font-family='Georgia,serif'%3E%3F%3C/text%3E%3C/svg%3E");
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      min-height: 100dvh;
+      font-family: 'Georgia', serif;
+      position: relative;
+      overflow: hidden;
+      padding: 16px;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(ellipse, rgba(200, 169, 110, 0.06) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      background: #1a1a1a;
+      border: 1px solid #2e2e2e;
+      border-radius: 4px;
+      width: 100%;
+      max-width: 580px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(200, 169, 110, 0.08),
+        0 30px 80px rgba(0, 0, 0, 0.9),
+        0 0 80px rgba(200, 169, 110, 0.04);
+    }
+
+    .header-bar {
+      background: #111;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #2e2e2e;
+    }
+
+    .header-bar svg { flex-shrink: 0; }
+
+    .header-bar span {
+      font-size: 11px;
+      color: #555;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .profile-section {
+      display: flex;
+    }
+
+    .photo-wrapper {
+      flex-shrink: 0;
+      width: 220px;
+      height: 260px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .photo-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(10%) contrast(1.08);
+    }
+
+    .photo-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 70px;
+      background: linear-gradient(transparent, #1a1a1a);
+    }
+
+    .info-section {
+      padding: 28px 28px 24px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 1;
+    }
+
+    .name {
+      font-size: 30px;
+      font-weight: 700;
+      color: #f0f0f0;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .title {
+      font-size: 11px;
+      color: #888;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .divider {
+      width: 32px;
+      height: 1px;
+      background: #c8a96e;
+      margin-bottom: 20px;
+    }
+
+    .credentials {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .credential-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .credential-item svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .credential-text {
+      font-size: 12px;
+      color: #777;
+      letter-spacing: 0.5px;
+      line-height: 1.5;
+    }
+
+    .credential-text strong {
+      color: #aaa;
+      font-weight: 600;
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-top: 16px;
+      border-top: 1px solid #2a2a2a;
+    }
+
+    .contact-row svg { flex-shrink: 0; }
+
+    .contact-row span {
+      font-size: 11px;
+      color: #555;
+      letter-spacing: 0.5px;
+    }
+
+    /* 핵심 문구 섹션 */
+    .punchline-section {
+      background: #111;
+      border-top: 1px solid #2e2e2e;
+      padding: 36px 28px 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .punchline-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #c8a96e 40%, #c8a96e 60%, transparent);
+    }
+
+    /* 배경 물음표 장식 */
+    .punchline-section::after {
+      content: '?';
+      position: absolute;
+      font-size: 220px;
+      font-weight: 900;
+      color: rgba(200, 169, 110, 0.04);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      font-family: 'Georgia', serif;
+      line-height: 1;
+    }
+
+    .punchline-label {
+      font-size: 9px;
+      color: #444;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .punchline {
+      font-size: 34px;
+      font-weight: 700;
+      color: #f0f0f0;
+      letter-spacing: -0.5px;
+      line-height: 1.25;
+      margin-bottom: 10px;
+      text-shadow: 0 0 50px rgba(200, 169, 110, 0.25);
+      position: relative;
+      z-index: 1;
+    }
+
+    .punchline .highlight {
+      color: #c8a96e;
+    }
+
+    .punchline-sub {
+      font-size: 12px;
+      color: #444;
+      letter-spacing: 1px;
+      font-style: italic;
+      position: relative;
+      z-index: 1;
+    }
+
+    .reveal-section {
+      background: #0a0a0a;
+      border-top: 1px solid #1e1e1e;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .reveal-text {
+      font-size: 10px;
+      color: #333;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    .april { color: #c8a96e; font-weight: 700; }
+
+    .badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-text {
+      font-size: 9px;
+      color: #3a3a3a;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* 모바일 반응형 */
+    @media (max-width: 480px) {
+      body {
+        padding: 0;
+        align-items: flex-start;
+      }
+
+      .card {
+        max-width: 100%;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .header-bar {
+        padding: 14px 20px;
+      }
+
+      .header-bar span {
+        font-size: 10px;
+        letter-spacing: 1.5px;
+      }
+
+      .profile-section {
+        flex-direction: column;
+      }
+
+      .photo-wrapper {
+        width: 100%;
+        height: 280px;
+      }
+
+      .photo-wrapper img {
+        object-position: center 20%;
+      }
+
+      .photo-overlay {
+        height: 100px;
+        background: linear-gradient(transparent, #1a1a1a);
+      }
+
+      .info-section {
+        padding: 20px 20px 20px 20px;
+      }
+
+      .name {
+        font-size: 26px;
+      }
+
+      .title {
+        font-size: 10px;
+        letter-spacing: 2px;
+        margin-bottom: 16px;
+      }
+
+      .divider {
+        margin-bottom: 16px;
+      }
+
+      .credentials {
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+
+      .credential-text {
+        font-size: 13px;
+      }
+
+      .contact-row span {
+        font-size: 10px;
+      }
+
+      .punchline-section {
+        padding: 32px 20px 28px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .punchline-section::after {
+        font-size: 160px;
+      }
+
+      .punchline {
+        font-size: 28px;
+      }
+
+      .punchline-sub {
+        font-size: 13px;
+      }
+
+      .reveal-section {
+        padding: 14px 20px;
+      }
+
+      .reveal-text {
+        font-size: 9px;
+        letter-spacing: 1.5px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+
+  <div class="header-bar">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <rect x="1" y="1" width="6" height="6" fill="#c8a96e" />
+      <rect x="9" y="1" width="6" height="6" fill="#555" />
+      <rect x="1" y="9" width="6" height="6" fill="#555" />
+      <rect x="9" y="9" width="6" height="6" fill="#333" />
+    </svg>
+    <span>Official Profile &nbsp;/&nbsp; Verified Executive</span>
+  </div>
+
+  <div class="profile-section">
+    <div class="photo-wrapper">
+      <img src="ddori_frank.jpeg" alt="Frank" />
+      <div class="photo-overlay"></div>
+    </div>
+
+    <div class="info-section">
+      <div>
+        <div class="name">Frank</div>
+        <div class="title">Chief Biscuit Officer</div>
+        <div class="divider"></div>
+
+        <div class="credentials">
+          <div class="credential-item">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <circle cx="6" cy="6" r="5" stroke="#c8a96e" stroke-width="1"/>
+              <line x1="6" y1="3" x2="6" y2="6.5" stroke="#c8a96e" stroke-width="1.2"/>
+              <line x1="6" y1="6.5" x2="8" y2="8" stroke="#c8a96e" stroke-width="1.2"/>
+            </svg>
+            <div class="credential-text">
+              <strong>13년 경력</strong> &nbsp;간식 수급 및 낮잠 최적화
+            </div>
+          </div>
+
+          <div class="credential-item">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1C4.07 1 2.5 2.57 2.5 4.5C2.5 7.25 6 11 6 11C6 11 9.5 7.25 9.5 4.5C9.5 2.57 7.93 1 6 1Z" stroke="#c8a96e" stroke-width="1"/>
+              <circle cx="6" cy="4.5" r="1.2" stroke="#c8a96e" stroke-width="1"/>
+            </svg>
+            <div class="credential-text">
+              소파 코너 자리 &nbsp;/&nbsp; 대한민국
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-row">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+          <circle cx="5" cy="5" r="4" stroke="#444" stroke-width="1"/>
+          <line x1="3" y1="5" x2="7" y2="5" stroke="#444" stroke-width="1"/>
+          <line x1="5" y1="3" x2="5" y2="7" stroke="#444" stroke-width="1"/>
+        </svg>
+        <span>Availability: Always &nbsp;&bull;&nbsp; Response Rate: 100% (if treats are involved)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="punchline-section">
+    <div class="punchline-label">Frank's Message</div>
+    <div class="punchline">내가 그렇게 <span class="highlight">보고 싶었오</span> ?</div>
+    <div class="punchline-sub">— 직접 찾아왔으면 됐잖아요</div>
+  </div>
+
+  <div class="reveal-section">
+    <div class="reveal-text"><span class="april">April Fools</span> &nbsp;&bull;&nbsp; 2026.04.01 &nbsp;&bull;&nbsp; No Biscuits Were Harmed</div>
+    <div class="badge">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <polygon points="7,1 8.8,5.2 13.5,5.6 10,8.7 11.1,13.3 7,11 2.9,13.3 4,8.7 0.5,5.6 5.2,5.2" stroke="#c8a96e" stroke-width="0.8" fill="none"/>
+      </svg>
+      <span class="badge-text">Verified</span>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
